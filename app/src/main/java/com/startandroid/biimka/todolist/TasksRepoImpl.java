@@ -19,7 +19,7 @@ public class TasksRepoImpl implements TasksRepo {
     }
 
     @Override
-    public void createTask(Task task) {
+    public void createTask(String name) {
 
     }
 

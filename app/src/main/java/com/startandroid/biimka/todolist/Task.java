@@ -29,11 +29,11 @@ public class Task {
         this.name = name;
     }
 
-    public boolean isCompleted() {
+    public boolean getIsCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setIsCompleted(boolean completed) {
         isCompleted = completed;
     }
 

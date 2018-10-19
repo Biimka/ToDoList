@@ -5,10 +5,10 @@ import java.util.List;
 public interface TasksRepo {
     List<Task> getTasks();
 
-    void createTask(Task task);
+    public void createTask(String name);
 
-    void updateTask(Task task);
+    public void updateTask(Task task);
 
-    void deleteTask(long id);
+    public void deleteTask(long id);
 
 }
