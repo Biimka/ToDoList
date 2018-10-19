@@ -1,7 +1,5 @@
 package com.startandroid.biimka.todolist;
 
-import java.util.List;
-
 public class Task {
     private long id;
     private String name;
