@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        (findViewById(R.id.fab)).setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.addTaskFAB)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, TaskActivity.class));
