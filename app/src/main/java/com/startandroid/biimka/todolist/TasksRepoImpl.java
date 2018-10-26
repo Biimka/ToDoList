@@ -28,12 +28,20 @@ public class TasksRepoImpl implements TasksRepo {
 
     @Override
     public void updateTask(Task task) {
-        tasks.set(getIndex(task.getId()), task);
+        final int position = getIndex(task.getId());
+        if (position < 0) {
+            return;
+        }
+        tasks.set(position, task);
     }
 
     @Override
     public void deleteTask(long id) {
-        tasks.remove(getIndex(id));
+        final int position = getIndex(id);
+        if (position < 0) {
+            return;
+        }
+        tasks.remove(position);
     }
 
     private int getIndex(long id) {
