@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ToDoList</string>
+    <string name="hint_task_name">Введите название задачи</string>
+    <string name="button_create">Создать задачу</string>
 </resources>
