@@ -1,6 +1,5 @@
 package com.startandroid.biimka.todolist;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -37,9 +36,7 @@ public class TaskActivity extends AppCompatActivity {
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
                 TasksRepoImpl.getInstance().createTask(editTextTaskName.getText().toString());
-                setResult(RESULT_OK, intent);
                 finish();
             }
         });
