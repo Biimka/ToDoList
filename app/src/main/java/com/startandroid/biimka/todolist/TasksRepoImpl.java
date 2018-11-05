@@ -21,6 +21,15 @@ public class TasksRepoImpl implements TasksRepo {
     }
 
     @Override
+    public Task getTask(long id) {
+        final int position = getIndex(id);
+        if (position < 0) {
+            return null;
+        }
+        return tasks.get(position);
+    }
+
+    @Override
     public void createTask(String name) {
         tasks.add(new Task(maxID, name, false));
         maxID++;

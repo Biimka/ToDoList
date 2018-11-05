@@ -11,12 +11,23 @@
         app:layout_constraintBottom_toTopOf="@id/buttonCreate"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
-
-        <EditText
-            android:id="@+id/editTextTaskName"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_task_name" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/editTextTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_task_name" />
+            <Switch
+                android:id="@+id/switchTaskActivity"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
     </ScrollView>
 
     <Button
