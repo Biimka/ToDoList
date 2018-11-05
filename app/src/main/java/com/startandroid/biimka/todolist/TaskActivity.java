@@ -1,7 +1,6 @@
 package com.startandroid.biimka.todolist;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,7 +26,7 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
 
         final EditText editTextTaskName = (EditText) findViewById(R.id.editTextTaskName);
-        final Button buttonCreate = (Button) findViewById(R.id.buttonCreate);
+        final Button butCreateUpdateRemove = (Button) findViewById(R.id.buttonCreateUpdateRemove);
         final Switch switchTaskActivity = (Switch) findViewById(R.id.switchTaskActivity);
 
         editTextTaskName.addTextChangedListener(new TextWatcher() {
@@ -38,7 +37,7 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 taskName = s.toString();
-                buttonCreate.setEnabled(s.length() != 0);
+                butCreateUpdateRemove.setEnabled(s.length() != 0);
             }
 
             @Override
@@ -47,7 +46,7 @@ public class TaskActivity extends AppCompatActivity {
             }
         });
 
-        buttonCreate.setOnClickListener(new View.OnClickListener() {
+        butCreateUpdateRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (taskId == 0) {
@@ -60,7 +59,7 @@ public class TaskActivity extends AppCompatActivity {
         });
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(TASK_ID)) {
-            buttonCreate.setText(R.string.save);
+            butCreateUpdateRemove.setText(R.string.save);
             switchTaskActivity.setVisibility(Switch.VISIBLE);
             taskId = getIntent().getExtras().getLong(TASK_ID);
             final Task task = tasksRepo.getTask(taskId);

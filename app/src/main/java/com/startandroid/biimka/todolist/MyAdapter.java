@@ -27,6 +27,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     interface Listener {
         void onItemClicked(Task task);
+
         void onItemChecked(long taskId, boolean isChecked);
     }
 
