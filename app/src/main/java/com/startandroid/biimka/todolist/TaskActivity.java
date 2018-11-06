@@ -75,16 +75,16 @@ public class TaskActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong("key1", taskId);
-        outState.putString("key", taskName);
-        outState.putBoolean("key2", isCompleted);
+        outState.putLong("TASK_ID", taskId);
+        outState.putString("TASK_NAME", taskName);
+        outState.putBoolean("ISCOMPLETED", isCompleted);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        taskName = savedInstanceState.getString("key");
-        taskId = savedInstanceState.getLong("key1");
-        isCompleted = savedInstanceState.getBoolean("key2");
+        taskId = savedInstanceState.getLong("TASK_ID");
+        taskName = savedInstanceState.getString("TASK_NAME");
+        isCompleted = savedInstanceState.getBoolean("ISCOMPLETED");
     }
 }
