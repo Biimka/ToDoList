@@ -12,6 +12,10 @@ import android.widget.Switch;
 public class TaskActivity extends AppCompatActivity {
 
     final static String TASK_ID = "TASK_ID";
+    final static String TASK_ID_SAVE_INSTANCE_STATE = "TASK_ID_SAVE_INSTANCE_STATE";
+    final static String TASK_NAME = "TASK_NAME";
+    final static String IS_COMPLETED = "IS_COMPLETED";
+
 
     private TasksRepo tasksRepo = TasksRepoImpl.getInstance();
 
@@ -75,16 +79,16 @@ public class TaskActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong("TASK_ID", taskId);
-        outState.putString("TASK_NAME", taskName);
-        outState.putBoolean("ISCOMPLETED", isCompleted);
+        outState.putLong(TASK_ID_SAVE_INSTANCE_STATE, taskId);
+        outState.putString(TASK_NAME, taskName);
+        outState.putBoolean(IS_COMPLETED, isCompleted);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        taskId = savedInstanceState.getLong("TASK_ID");
-        taskName = savedInstanceState.getString("TASK_NAME");
-        isCompleted = savedInstanceState.getBoolean("ISCOMPLETED");
+        taskId = savedInstanceState.getLong(TASK_ID_SAVE_INSTANCE_STATE);
+        taskName = savedInstanceState.getString(TASK_NAME);
+        isCompleted = savedInstanceState.getBoolean(IS_COMPLETED);
     }
 }
