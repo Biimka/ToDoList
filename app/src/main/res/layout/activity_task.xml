@@ -7,20 +7,34 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/buttonCreate"
+        app:layout_constraintBottom_toTopOf="@id/buttonCreateUpdateRemove"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextTaskName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_task_name" />
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editTextTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_task_name" />
+
+            <Switch
+                android:id="@+id/switchTaskActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+
     </ScrollView>
 
     <Button
-        android:id="@+id/buttonCreate"
+        android:id="@+id/buttonCreateUpdateRemove"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:enabled="false"
