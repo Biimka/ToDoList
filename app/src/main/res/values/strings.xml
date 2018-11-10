@@ -3,4 +3,6 @@
     <string name="hint_task_name">Введите название задачи</string>
     <string name="button_create">Создать задачу</string>
     <string name="save">Сохранить</string>
+    <string name="myDB">MyDB</string>
+    <string name="deleteTasks">Удалить все задачи</string>
 </resources>
