@@ -1,21 +1,19 @@
 package com.startandroid.biimka.todolist;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TasksRepoImpl implements TasksRepo {
-    private List<Task> tasks = new ArrayList<>();
     private long maxID = 1;
     private static final TasksRepoImpl ourInstance = new TasksRepoImpl();
     private DBHelper dbHelper = new DBHelper(App.context);
-    private ContentValues cv = new ContentValues();
     private SQLiteDatabase db = dbHelper.getWritableDatabase();
-    private Cursor cursor = db.query("mytable", null, null,
-            null, null, null, null);
 
     public static TasksRepoImpl getInstance() {
         return ourInstance;
@@ -26,17 +24,20 @@ public class TasksRepoImpl implements TasksRepo {
 
     @Override
     public List<Task> getTasks() {
-        if (cursor.moveToFirst()) {
-            int idColIndex = cursor.getColumnIndex("id");
-            int nameColIndex = cursor.getColumnIndex("taskName");
-            int isCompletedColIndex = cursor.getColumnIndex("isCompleted");
-            boolean isCompletedBool = isCompletedColIndex == 1;
+        final List<Task> tasks = new ArrayList<>();
+        final Cursor tasksCursor = db.query("Tasks", null, null,
+                null, null, null, null);
+        if (tasksCursor.moveToFirst()) {
+            int idColIndex = tasksCursor.getColumnIndex("id");
+            int nameColIndex = tasksCursor.getColumnIndex("taskName");
+            int isCompletedColIndex = tasksCursor.getColumnIndex("isCompleted");
+            boolean isCompletedBool = tasksCursor.getInt(isCompletedColIndex) == 1;
             do {
-                tasks.add(new Task(cursor.getInt(idColIndex),
-                        cursor.getString(nameColIndex), isCompletedBool));
-            } while (cursor.moveToNext());
+                tasks.add(new Task(tasksCursor.getInt(idColIndex),
+                        tasksCursor.getString(nameColIndex), isCompletedBool));
+            } while (tasksCursor.moveToNext());
         }
-        cursor.close();
+        tasksCursor.close();
         return tasks;
     }
 
@@ -46,32 +47,32 @@ public class TasksRepoImpl implements TasksRepo {
         if (position < 0) {
             return null;
         }
-        return tasks.get(position);
+        return getTasks().get(position);
     }
 
     @Override
     public void createTask(String name) {
-        tasks.add(new Task(maxID, name, false));
+        final ContentValues contentValues = new ContentValues();
+        getTasks().add(new Task(maxID, name, false));
         maxID++;
-        cv.put("taskName", name);
-        cv.put("isCompleted", false);
-        db.insert("mytable", null, cv);
+        contentValues.put("taskName", name);
+        contentValues.put("isCompleted", 0);
+        db.insert("Tasks", null, contentValues);
     }
 
     @Override
     public void updateTask(Task task) {
+        final ContentValues contentValues = new ContentValues();
         final int position = getIndex(task.getId());
-        if (position < 0) {
-            return;
-        }
-        tasks.set(position, task);
+        if (position < 0) return;
+        getTasks().set(position, task);
         int isCompleted;
         if (!task.isCompleted()) isCompleted = 0;
         else isCompleted = 1;
-        cv.put("id", task.getId());
-        cv.put("taskName", task.getName());
-        cv.put("isCompleted", isCompleted);
-        db.update("mytable", cv, "id = ?",
+        contentValues.put("id", task.getId());
+        contentValues.put("taskName", task.getName());
+        contentValues.put("isCompleted", isCompleted);
+        db.update("Tasks", contentValues, "id = ?",
                 new String[]{String.valueOf(task.getId())});
     }
 
@@ -81,10 +82,11 @@ public class TasksRepoImpl implements TasksRepo {
         if (position < 0) {
             return;
         }
-        tasks.remove(position);
+        getTasks().remove(position);
     }
 
     private int getIndex(long id) {
+        final List<Task> tasks = getTasks();
         for (int i = 0; i < tasks.size(); i++) {
             if (id == tasks.get(i).getId()) {
                 return i;
@@ -93,3 +95,23 @@ public class TasksRepoImpl implements TasksRepo {
         return -1;
     }
 }
+
+class DBHelper extends SQLiteOpenHelper {
+
+    DBHelper(Context context) {
+        super(context, context.getString(R.string.myDataBase), null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("create table Tasks("
+                + "id integer primary key autoincrement,"
+                + "taskName text,"
+                + "isCompleted integer" + ");");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+    }
+}
+
