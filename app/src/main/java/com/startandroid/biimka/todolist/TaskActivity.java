@@ -16,7 +16,6 @@ public class TaskActivity extends AppCompatActivity {
     final static String TASK_NAME = "TASK_NAME";
     final static String IS_COMPLETED = "IS_COMPLETED";
 
-
     private TasksRepo tasksRepo = TasksRepoImpl.getInstance();
 
     private long taskId = 0;
@@ -41,6 +40,7 @@ public class TaskActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 taskName = s.toString();
+                editTextTaskName.setSelection(taskName.length());
                 butCreateUpdateRemove.setEnabled(s.length() != 0);
             }
 
